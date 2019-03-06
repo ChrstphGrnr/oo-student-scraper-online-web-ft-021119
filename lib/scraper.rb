@@ -36,9 +36,25 @@ class Scraper
     # binding.pry
     socials = {}
     social_links = doc.css('div.social-icon-container a')
-    binding.pry
+    # binding.pry
+    social_links.each do |social|
+      if social.attribute('href').value.include?("twitter")
+        socials[:twitter] = social.attribute('href').value
+      elsif social.attribute('href').value.include?("linkedin")
+        socials[:linkedin] = social.attribute('href').value
+      elsif social.attribute('href').value.include?("github")
+        socials[:github] = social.attribute('href').value
+      elsif social.attribute('href').value.length > 0
+        socials[:blog] = social.attribute('href').value
+      end
+      # binding.pry
+    end
+
+    socials[:profile_quote] = doc.css('div.profile-quote').text
+    socials[:bio] = doc.css('div.description-holder p').text
 
 
+    socials
 
       # twitter: social_links[0].attribute('href').value
       # linkedin: social_links[1].attribute('href').value
@@ -46,7 +62,7 @@ class Scraper
       # blog: social_links[3].attribute('href').value
       # profile_quote: doc.css('div.profile-quote').text
       # bio: doc.css('div.description-holder p').first.text
-    
+
 
   end
 
