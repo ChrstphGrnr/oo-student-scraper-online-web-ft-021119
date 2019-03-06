@@ -22,7 +22,7 @@ class Student
     attributes_hash.each do |k, v|
       self.send("#{k}=", v)
     end
-    binding.pry
+    # binding.pry
   end
 
   def self.all
