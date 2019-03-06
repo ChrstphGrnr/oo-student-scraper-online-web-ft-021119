@@ -8,23 +8,23 @@ require 'nokogiri'
 class Scraper
 
   def self.scrape_index_page(index_url)
-    student_info = []
+
     doc = Nokogiri::HTML(open(index_url))
-    binding.pry
+    student_roster = doc.css('div.student-card')
+    # binding.pry
 
-    # students__names_array
-    student_names = doc.css('h4.student-name').children.map {|student|student.text}
-    student_location = doc.css('p.student-location').children.map {|student|student.text}
-    student_profile = doc.css('a'    )
-
-    student_names.each do |student|
-      student_info << {name: student}
+    students = []
+    student_roster.each do |student|
+      # binding.pry
+      students << {
+        name: student.css('h4.student-name').text,
+        location: student.css('p.student-location').text,
+        profile_url: student.css('a').first['href']
+      }
+      # binding.pry
     end
 
-
-
-
-    # binding.pry
+    students
 
   end
 
